@@ -51,21 +51,21 @@ clean-test: ## remove test and coverage artifacts
 lint: ## check style with flake8
 	flake8 trust_pypi_example tests
 
-test: cargo-build ## run tests quickly with the default Python
+test: ## run tests quickly with the default Python
 	py.test
 	
 
 
-cargo-build: ## build rust lib. It's important that --release is used for packaging
-	cargo build --manifest-path trust_pypi_example/rust/Cargo.toml --release
-cargo-test: ## build rust lib. It's important that --release is used for packaging
+cargo-test: ## build rust lib for local testing. DO NOT USE ON TRAVIS. Cross needs to build for the target
 	cargo test --manifest-path trust_pypi_example/rust/Cargo.toml --release
 
+cargo-build: ## build rust lib for local testing. DO NOT USE ON TRAVIS. Cross needs to build for the target
+	cargo build --manifest-path trust_pypi_example/rust/Cargo.toml --release
 
-test-all: cargo-build ## run tests on every Python version with tox
+test-all: ## run tests on every Python version with tox
 	tox
 
-coverage: cargo-build ## check code coverage quickly with the default Python
+coverage: ## check code coverage quickly with the default Python
 	coverage run --source trust_pypi_example -m pytest
 	
 		coverage report -m
@@ -83,14 +83,14 @@ docs: ## generate Sphinx HTML documentation, including API docs
 servedocs: docs ## compile the docs watching for changes
 	watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs html' -R -D .
 
-release: clean cargo-build ## package and upload a release
+release: clean ## package and upload a release
 	python setup.py sdist upload
 	python setup.py bdist_wheel upload
 
-dist: clean cargo-build ## builds source and wheel package
+dist: clean ## builds source and wheel package
 	python setup.py sdist
 	python setup.py bdist_wheel
 	ls -l dist
 
-install: clean cargo-build ## install the package to the active Python's site-packages
+install: clean ## install the package to the active Python's site-packages
 	python setup.py install

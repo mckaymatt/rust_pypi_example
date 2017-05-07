@@ -72,7 +72,6 @@ install:
 
 script:
   - bash ci/script.sh 
-  - bash ci/pyscript.sh
 
 after_script: set +e
 

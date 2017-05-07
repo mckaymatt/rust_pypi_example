@@ -3,9 +3,6 @@
 set -ex
 
 main() {
-    # move into rust project subdir
-    cd trust_pypi_example/rust/
-
     cross build --target $TARGET
     cross build --target $TARGET --release
 
@@ -20,7 +17,22 @@ main() {
     cross run --target $TARGET --release
 }
 
+pymain() {
+    source ~/.venv/bin/activate
+    make test
+    make lint
+
+    python setup.py bdist_wheel
+    ls -la dist/
+}
+
+
+# move into rust project subdir
+pushd trust_pypi_example/rust/
 # we don't run the "test phase" when doing deploys
 if [ -z $TRAVIS_TAG ]; then
     main
 fi
+
+popd
+pymain
