@@ -116,10 +116,11 @@ before_cache:
   - chmod -R a+r $HOME/.cache/pyenv
 
 cache:
-  cargo: true
+  # There is a "cache: cargo" option but it's fails if target/ isn't in the build dir
   directories:
     - $HOME/.cache/pip
     - $HOME/.cache/pyenv
+    - $HOME/.cargo  ## this may not be worth it depending on the time it takes to push/pull from S3
 
 branches:
   only:
