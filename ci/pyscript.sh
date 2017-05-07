@@ -1,19 +1,11 @@
 # this packages the Rust lib in with you Python package and runs tests
 set -ex
-printenv ||true
-export PATH="$HOME/.pyenv/shims:$HOME/.pyenv/bin:$PATH"
+
+python --version
 
 source ~/.venv/bin/activate
+python --version
 pip install -U pip
-pip install -r requirements-test.txt
+pip install -r requirements_dev.txt
 make test 
 make lint
-# python --version
-# pip --version
-# pip install virtualenv
-# python -m virtualenv ~/.venv
-# source ~/.venv/bin/activate
-# pip install coveralls
-# pip install .[credssp]
-# pip install .[kerberos]
-# pip install -r requirements-test.txt
