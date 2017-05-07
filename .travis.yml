@@ -4,8 +4,6 @@ dist: trusty
 language: rust
 services: docker
 sudo: required
-rust:
-  - stable
 # Config file for automatic testing at travis-ci.org
 # This file will be regenerated if you run travis_pypi_setup.py
 
