@@ -18,6 +18,9 @@ python --version
 pip install -U pip
 pip install -U virtualenv
 python -m virtualenv ~/.venv
-source ~/.venv/bin/activate
+ls -la ~/.venv
+ls -la ~/.venv/bin/
+. ~/.venv/bin/activate
+
 pip install -U pip
 pip install -r requirements_dev.txt

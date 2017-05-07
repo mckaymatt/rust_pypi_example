@@ -18,7 +18,7 @@ main() {
 }
 
 pymain() {
-    source ~/.venv/bin/activate
+    . ~/.venv/bin/activate
     make test
     make lint
 
