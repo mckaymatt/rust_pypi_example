@@ -1,10 +1,4 @@
 set -ex
-printenv || true
-echo $PATH || true
-eval "$(pyenv init -)" || true
-pyenv versions || true
-ls -la ~/ || true
-
 rm -rf ~/.pyenv
 git clone https://github.com/yyuu/pyenv.git ~/.pyenv
 mkdir -p ~/.cache/pyenv/versions
