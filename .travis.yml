@@ -114,6 +114,7 @@ before_cache:
   # Travis can't cache files that are not readable by "others"
   - chmod -R a+r $HOME/.cache/pip
   - chmod -R a+r $HOME/.cache/pyenv
+  - chmod -R a+r $HOME/.cargo
 
 cache:
   # There is a "cache: cargo" option but it's fails if target/ isn't in the build dir

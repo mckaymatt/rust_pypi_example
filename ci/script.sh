@@ -2,8 +2,10 @@
 
 set -ex
 
-# TODO This is the "test phase", tweak it as you see fit
 main() {
+    # move into rust project subdir
+    cd trust_pypi_example/rust/
+
     cross build --target $TARGET
     cross build --target $TARGET --release
 
