@@ -18,7 +18,7 @@ trust_pypi_example
      :alt: Updates
 
 
-produced by cookiecutter
+Python Boilerplate contains all the boilerplate you need to create a Python wheel with Rust.
 
 
 * Free software: Apache Software License 2.0

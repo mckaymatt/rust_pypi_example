@@ -1,0 +1,4 @@
+[root]
+name = "trust_pypi_example"
+version = "0.1.0"
+

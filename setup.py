@@ -22,7 +22,7 @@ test_requirements = [
 setup(
     name='trust_pypi_example',
     version='0.1.0',
-    description="produced by cookiecutter",
+    description="Python Boilerplate contains all the boilerplate you need to create a Python wheel with Rust.",
     long_description=readme + '\n\n' + history,
     author="Matt McKay",
     author_email='mckaymatt@gmail.com',
