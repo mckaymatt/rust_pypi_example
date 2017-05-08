@@ -29,10 +29,7 @@ pymain() {
 
 # move into rust project subdir
 pushd trust_pypi_example/rust/
-# we don't run the "test phase" when doing deploys
-if [ -z $TRAVIS_TAG ]; then
-    main
-fi
+main
 
 popd
 pymain
