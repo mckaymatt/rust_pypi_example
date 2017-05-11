@@ -2,13 +2,16 @@ set -ex
 
 PATH="$HOME/.pyenv/shims:$HOME/.pyenv/bin:$PATH"
 pyenv --version || true
-
-if [ -d "$HOME/.pyenv" ]; then
+if [ -d "$HOME/.pyenv/.git" ]; then
+    # for local testing
     pushd "$HOME/.pyenv"
     git pull
     popd
 else
+    rm -rf ~/.pyenv
     git clone https://github.com/yyuu/pyenv.git $HOME/.pyenv
+    mkdir -p ~/.cache/pyenv/versions
+    ln -s ~/.cache/pyenv/versions ~/.pyenv/versions
 fi
 
 if [ -z ${PYENV+x} ]; then 
