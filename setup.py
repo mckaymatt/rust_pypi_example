@@ -1,7 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from setuptools import setup
+from setuptools import setup, Distribution
+
+
+# Wheel thinks we are building a pure python wheel since we use cross for compilation 
+# instead of wheel
+# http://stackoverflow.com/questions/35112511/pip-setup-py-bdist-wheel-no-longer-builds-forced-non-pure-wheels
+# Tested with wheel v0.29.0
+# may fail with different version of wheel
+class BinaryDistribution(Distribution):
+    """Distribution which always forces a binary package with platform name"""
+    def has_ext_modules(foo):
+        return True
+
 
 with open('README.rst') as readme_file:
     readme = readme_file.read()
@@ -20,6 +32,7 @@ test_requirements = [
 ]
 
 setup(
+    distclass=BinaryDistribution,
     name='trust_pypi_example',
     version='0.1.0',
     description="Python Boilerplate contains all the boilerplate you need to create a Python wheel with Rust.",
@@ -56,5 +69,5 @@ setup(
         'Programming Language :: Python :: 3.5',
     ],
     test_suite='tests',
-    tests_require=test_requirements
+    tests_require=test_requirements,
 )

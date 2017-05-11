@@ -1,12 +1,29 @@
 set -ex
 
+PATH="$HOME/.pyenv/shims:$HOME/.pyenv/bin:$PATH"
 pyenv --version || true
 
-# get most up to date pyenv but keep cache of Python versions
-rm -rf ~/.pyenv ~/.venv
-git clone https://github.com/yyuu/pyenv.git ~/.pyenv
-mkdir -p ~/.cache/pyenv/versions
-ln -s ~/.cache/pyenv/versions ~/.pyenv/versions
+if [ -d "$HOME/.pyenv" ]; then
+    pushd "$HOME/.pyenv"
+    git pull
+    popd
+else
+    git clone https://github.com/yyuu/pyenv.git $HOME/.pyenv
+fi
+
+if [ -z ${PYENV+x} ]; then 
+    # This is for local testing. You can change the default to match your system.
+    export PYENV='3.6.1'
+    echo "PYENV is not set. Defaulting to python $PYENV."
+    if [ ! -z ${TRAVIS_BUILD_NUMBER+x} ]; then
+        # should not see TRAVIS_BUILD_NUMBER if this is local testing.
+        echo "TARGET is not set but TRAVIS_BUILD_NUMBER is. Exiting with error"
+        exit 2
+    fi
+else
+    echo "PYENV is $PYENV"
+fi
+
 pyenv --version
 pyenv install --skip-existing $PYENV
 pyenv global $PYENV
@@ -14,10 +31,10 @@ pyenv global $PYENV
 pyenv rehash
 
 python --version
-
-pip install -U pip
-pip install -U virtualenv
-python -m virtualenv ~/.venv
-. ~/.venv/bin/activate
-pip install -U pip
-pip install -r requirements_dev.txt
+rm -rf .venv
+pip install -U pip || true
+pip install -U virtualenv || true
+python -m venv .venv || python -m virtualenv .venv
+source .venv/bin/activate
+pip install -U pip 
+pip install -r requirements_dev.txt 

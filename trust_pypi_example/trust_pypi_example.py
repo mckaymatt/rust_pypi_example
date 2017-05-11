@@ -20,19 +20,22 @@ elif sys.platform == 'darwin':
 else:
     DYNAMIC_LIB_FORMAT = 'lib%s.so'
 
-rust_lib = ffi.dlopen(os.path.join(
+DLPATH = os.path.join(
     # FIXME: path is hard-coded
     # If the crate is built without the "--release" flag
     # the path will be 'rust/target/debug' and this will
     # cause OSError
     os.path.dirname(__file__), 'rust', 'target', 'release',
     DYNAMIC_LIB_FORMAT % 'trust_pypi_example'
-))
+    )
+
+rust_lib = ffi.dlopen(DLPATH)
 
 
 def main():
     assert rust_lib.is_prime(13) == 1
     assert rust_lib.is_prime(12) == 0
+
 
 if __name__ == '__main__':
     main()

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import click
-from trust_pypi_example import rust_lib
+from .trust_pypi_example import rust_lib
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
@@ -23,6 +23,6 @@ def main(number=None):
         click.echo("Please supply an integer argument greater than 2. The "
                    "console script will tell you if it is a prime number")
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     main()

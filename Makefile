@@ -32,7 +32,7 @@ clean: clean-build clean-pyc clean-test ## remove all build, test, coverage and 
 clean-build: ## remove build artifacts
 	rm -fr build/
 	rm -fr dist/
-	rm -fr */rust/target
+	rm -fr trust_pypi_example/rust/target
 	rm -fr .eggs/
 	find . -name '*.egg-info' -exec rm -fr {} +
 	find . -name '*.egg' -exec rm -f {} +
@@ -61,6 +61,9 @@ cargo-test: ## build rust lib for local testing. DO NOT USE ON TRAVIS. Cross nee
 
 cargo-build: ## build rust lib for local testing. DO NOT USE ON TRAVIS. Cross needs to build for the target
 	cargo build --manifest-path trust_pypi_example/rust/Cargo.toml --release
+
+cross-build: clean
+	cross build --manifest-path trust_pypi_example/rust/Cargo.toml --target $$TARGET --release
 
 test-all: ## run tests on every Python version with tox
 	tox
