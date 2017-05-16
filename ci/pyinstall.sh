@@ -1,5 +1,5 @@
 set -ex
-
+# Set up pyinstall and the virtualenv
 PATH="$HOME/.pyenv/shims:$HOME/.pyenv/bin:$PATH"
 pyenv --version || true
 if [ -d "$HOME/.pyenv/.git" ]; then
@@ -39,5 +39,5 @@ pip install -U pip || true
 pip install -U virtualenv || true
 python -m venv .venv || python -m virtualenv .venv
 source .venv/bin/activate
-pip install -U pip 
-pip install -r requirements_dev.txt 
+pip install -q -U pip 
+pip install -q -r requirements_dev.txt 

@@ -2,17 +2,30 @@
 
 set -ex
 
-main() {
-    # move into rust project subdir
+manylinux_linux() {
+    # cache pip packages used in docker
+    mkdir -p "$HOME/.manylinux_pip_cache"
+    mkdir -p "$HOME/.manylinux_cargo_cache"
+    mkdir -p "$HOME/.manylinux_rustup_cache"
+
+    CACHES="-v $HOME/.manylinux_pip_cache:/root/.cache/pip \
+           -v $HOME/.manylinux_cargo_cache:/root/.cargo \
+           -v $HOME/.manylinux_rustup_cache:/root/.rustup " 
+    # SUB='-v /home/matt/workspace/auditwheel/auditwheel/wheeltools.py:/opt/python/cp36-cp36m/lib/python3.6/site-packages/auditwheel/wheeltools.py'
+    docker run --rm -e TARGET="${TARGET}" $CACHES -v `pwd`:/io quay.io/pypa/manylinux1_x86_64 /io/ci/manylinux_build_wheel.sh
+
+}
+
+pyenv_build_test_bundle() {
+    # This uses cross and Pyenv
+
     pushd trust_pypi_example/rust/
-    cross build --target $TARGET
     cross build --target $TARGET --release
 
     # disable tests
     if [ ! -z $DISABLE_TESTS ]; then
         echo "Rust Tests Disabled"
     else
-        cross test --target $TARGET
         cross test --target $TARGET --release
     fi
     # uncomment if creating a bin
@@ -28,22 +41,22 @@ main() {
     else
         pushd target
         mv release release.bak || true
-        ln -s $TARGET/release release
+        cp -r $TARGET/release release
         popd
     fi
     popd
-}
-
-pymain() {
+    rm -rf wheelhouse
+    mkdir -p wheelhouse
     source .venv/bin/activate
-    python setup.py bdist_wheel
+    pip install -q -r requirements_dev.txt
+    python setup.py bdist_wheel  --plat-name="$WHEELPLATFORM"
+    cp dist/*.whl wheelhouse
+    pip install wheelhouse/*.whl
+    py.test tests/
+    
 
-    make test
-    make lint
-    make coverage
-    make docs
+
 }
-
 
 if [ -z ${TARGET+x} ]; then
     if [ ! -z ${TRAVIS_BUILD_NUMBER+x} ]; then
@@ -59,7 +72,8 @@ else
 fi
 
 
-
-
-main
-pymain
+if [ $TRAVIS_OS_NAME = "osx" ]; then
+    pyenv_build_test_bundle
+else
+    manylinux_linux
+fi

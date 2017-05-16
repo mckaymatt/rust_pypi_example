@@ -2,6 +2,8 @@
 .DEFAULT_GOAL := help
 define BROWSER_PYSCRIPT
 import os, webbrowser, sys
+if os.environ.get('TRAVIS_BUILD_NUMBER'):
+	exit(0)
 try:
 	from urllib import pathname2url
 except:
