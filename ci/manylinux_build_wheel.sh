@@ -21,8 +21,8 @@ function rust_build() {
     curl https://sh.rustup.rs -sSf > /tmp/rustup.sh
     sh /tmp/rustup.sh -y
     source $HOME/.cargo/env
-    rustup install "nightly-$TARGET"
-    rustup default "nightly-$TARGET"
+    rustup install "stable-$TARGET"
+    rustup default "stable-$TARGET"
     rustup update
 
     cd /io/trust_pypi_example/rust/

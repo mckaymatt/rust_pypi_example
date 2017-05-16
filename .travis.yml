@@ -23,7 +23,7 @@ matrix:
     # we are using Rustup instead of cross when WHEELPLATFORM="*manylinux*". This is because both 
     # manylinux and Cross depend on Docker but the shared libs in the Cross contains are too new
     # to make valid manylinux containers. 
-    #
+    # 
     # You can lean more about the differnt Rustup toolchains here: 
     # https://github.com/rust-lang-nursery/rustup.rs#toolchain-specification
     # 
@@ -35,7 +35,7 @@ matrix:
     # cp27-cp27m, cp27-cp27mu, cp33-cp33m, cp34-cp34m, cp35-cp35m, cp36-cp36m
     # PYENV versions isn't relevent here so just keep it at 3.6.1 
     - env: TARGET=i686-unknown-linux-gnu PYENV=3.6.1 WHEELPLATFORM=manylinux1_i686
-    - env: TARGET=stable-x86_64-unknown-linux-gnu PYENV=3.6.1 WHEELPLATFORM=manylinux1_x86_64
+    - env: TARGET=x86_64-unknown-linux-gnu PYENV=3.6.1 WHEELPLATFORM=manylinux1_x86_64
 
     #  Note that musl isn't covered by manylinux and I had trouble building 
     #  dylibs with it as well

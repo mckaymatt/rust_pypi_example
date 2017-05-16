@@ -11,8 +11,9 @@ manylinux_linux() {
     CACHES="-v $HOME/.manylinux_pip_cache:/root/.cache/pip \
            -v $HOME/.manylinux_cargo_cache:/root/.cargo \
            -v $HOME/.manylinux_rustup_cache:/root/.rustup " 
-    # SUB='-v /home/matt/workspace/auditwheel/auditwheel/wheeltools.py:/opt/python/cp36-cp36m/lib/python3.6/site-packages/auditwheel/wheeltools.py'
-    docker run --rm -e TARGET="${TARGET}" $CACHES -v `pwd`:/io quay.io/pypa/manylinux1_x86_64 /io/ci/manylinux_build_wheel.sh
+
+    # WHEELPLATFORM is either "manylinux1_i686" or "manylinux1_x86_64"
+    docker run --rm -e TARGET="${TARGET}" $CACHES -v `pwd`:/io "quay.io/pypa/${WHEELPLATFORM}" /io/ci/manylinux_build_wheel.sh
 
 }
 
