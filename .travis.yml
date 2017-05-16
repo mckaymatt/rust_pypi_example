@@ -13,6 +13,7 @@ env:
     - CRATE_NAME=trust_pypi_example
     # Rust release. E.g. Stable, nightly, nightly-2014-12-18
     - RUSTRELEASE=stable
+    - SKIPCROSS=true
 
 matrix:
   include:
@@ -49,13 +50,13 @@ matrix:
     # OSX
     # See versions https://docs.travis-ci.com/user/osx-ci-environment/#OS-X-Version
     # current default is osx_image: xcode7.3 OS X 10.11
-    #
+    # xcode6.4 seems to segfault with rustup or cross
     - env: TARGET=x86_64-apple-darwin PYENV=2.7.13 WHEELPLATFORM=macosx_10_11_x86_64
       os: osx
       osx_image: xcode7.3
-    - env: TARGET=x86_64-apple-darwin PYENV=3.6.1 WHEELPLATFORM=macosx_10_10_x86_64
+    - env: TARGET=x86_64-apple-darwin PYENV=3.6.1 WHEELPLATFORM=macosx_10_12_x86_64
       os: osx
-      osx_image: xcode6.4
+      osx_image: xcode8.1
     # - env: TARGET=i686-apple-darwin PYENV=2.7.13 WHEELPLATFORM=
     #   os: osx
     # - env: TARGET=i686-apple-darwin PYENV=3.6.1 WHEELPLATFORM=

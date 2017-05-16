@@ -7,7 +7,7 @@ main() {
     fi
     if [ ! -z ${SKIPCROSS+x} ]; then 
         # This is for local testing. It skips the install.
-        echo "SKIPCROSS is set. This must be a local test"
+        echo "SKIPCROSS is set."
         return
     fi
     local target=
@@ -34,4 +34,6 @@ main() {
            --target $target
 }
 
+
+# Skipping this for now. 
 # main

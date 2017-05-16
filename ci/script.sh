@@ -33,19 +33,13 @@ pyenv_build_test_bundle() {
 
     pushd trust_pypi_example/rust/
     cargo build --target $TARGET --release
-    # pushd trust_pypi_example/rust/
-    # cross build --target $TARGET --release
 
     # disable tests
     if [ ! -z $DISABLE_TESTS ]; then
         echo "Rust Tests Disabled"
     else
         cargo test --target $TARGET --release
-        # cross test --target $TARGET --release
     fi
-    # uncomment if creating a bin
-    # cross run --target $TARGET
-    # cross run --target $TARGET --release
 
     # hack 
     # move target/$TARGET/release to target/release to make
