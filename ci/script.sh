@@ -2,6 +2,9 @@
 
 set -ex
 
+# This builds "manylinux" python packages in the manylinux docker container
+# More on manylinuyx at https://github.com/pypa/manylinux
+# and the pep https://www.python.org/dev/peps/pep-0513
 manylinux_linux() {
     # cache pip packages used in docker
     mkdir -p "$HOME/.manylinux_pip_cache"
@@ -11,22 +14,34 @@ manylinux_linux() {
     CACHES="-v $HOME/.manylinux_pip_cache:/root/.cache/pip \
            -v $HOME/.manylinux_cargo_cache:/root/.cargo \
            -v $HOME/.manylinux_rustup_cache:/root/.rustup " 
-    # SUB='-v /home/matt/workspace/auditwheel/auditwheel/wheeltools.py:/opt/python/cp36-cp36m/lib/python3.6/site-packages/auditwheel/wheeltools.py'
-    docker run --rm -e TARGET="${TARGET}" $CACHES -v `pwd`:/io quay.io/pypa/manylinux1_x86_64 /io/ci/manylinux_build_wheel.sh
+
+    # WHEELPLATFORM is either "manylinux1_i686" or "manylinux1_x86_64"
+    docker run --rm -e TARGET="${TARGET}" -e RUSTRELEASE="${RUSTRELEASE}" $CACHES -v `pwd`:/io "quay.io/pypa/${WHEELPLATFORM}" /io/ci/manylinux_build_wheel.sh
 
 }
 
+# This is for OSX mainly. It gets python from Pyenv and uses Rustup for getting rustc. 
+# it could also be used for testing on other nixes
 pyenv_build_test_bundle() {
     # This uses cross and Pyenv
+    curl https://sh.rustup.rs -sSf > /tmp/rustup.sh
+    sh /tmp/rustup.sh -y
+    source $HOME/.cargo/env
+    rustup install "${RUSTRELEASE}-${TARGET}"
+    rustup default "${RUSTRELEASE}-${TARGET}"
+    rustup update
 
     pushd trust_pypi_example/rust/
-    cross build --target $TARGET --release
+    cargo build --target $TARGET --release
+    # pushd trust_pypi_example/rust/
+    # cross build --target $TARGET --release
 
     # disable tests
     if [ ! -z $DISABLE_TESTS ]; then
         echo "Rust Tests Disabled"
     else
-        cross test --target $TARGET --release
+        cargo test --target $TARGET --release
+        # cross test --target $TARGET --release
     fi
     # uncomment if creating a bin
     # cross run --target $TARGET
@@ -35,7 +50,7 @@ pyenv_build_test_bundle() {
     # hack 
     # move target/$TARGET/release to target/release to make
     # it easier to locate for py dist. See trust_pypi_example.py
-    if [ ! -d "target/$TARGET/release" ]; then
+    if [ ! -d "target/${TARGET}/release" ]; then
         echo "Cannot find release dir at target/$TARGET/release"
         exit 2
     else
@@ -66,13 +81,25 @@ if [ -z ${TARGET+x} ]; then
     echo "TARGET is not set. Defaulting to x86_64-unknown-linux-gnu"
     export TARGET='x86_64-unknown-linux-gnu'
     # This is for local testing. You can change the default to match your system.
-
 else 
     echo "TARGET is $TARGET"
 fi
 
 
-if [ $TRAVIS_OS_NAME = "osx" ]; then
+if [ -z ${RUSTRELEASE+x} ]; then
+    if [ ! -z ${TRAVIS_BUILD_NUMBER+x} ]; then
+        echo "RUSTRELEASE not set but it looks like this is running on Travis."
+        exit 2
+    fi
+    echo "RUSTRELEASE is not set. Defaulting to stable"
+    export RUSTRELEASE=stable
+    # This is for local testing. You can change the default to match your system.
+else 
+    echo "RUSTRELEASE is $RUSTRELEASE"
+fi
+
+
+if [ "$TRAVIS_OS_NAME" == "osx" ]; then
     pyenv_build_test_bundle
 else
     manylinux_linux
