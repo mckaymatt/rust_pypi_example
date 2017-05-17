@@ -1,5 +1,10 @@
 set -ex
 
+du -shx $HOME/.cache/pip $HOME/.cache/pyenv $HOME/.cargo $HOME/.rustup \
+        $HOME/.manylinux_pip_cache $HOME/.manylinux_rustup_cache \
+        $HOME/.manylinux_cargo_cache || true
+
+
 function pyenv_install() {
     # Set up pyinstall and the virtualenv
     PATH="$HOME/.pyenv/shims:$HOME/.pyenv/bin:$PATH"
@@ -17,12 +22,16 @@ function pyenv_install() {
     fi
 
     # make venvs for each version we want to test
-    rm -rf /tmp/.venv
+    rm -rf /tmp/.venv /tmp/pyenv_versions
     
     IFS="," # allows iterating over csv string
     for CURRENT_PYENV in $PYENV; do
+        echo "$CURRENT_PYENV" >> /tmp/pyenv_versions
+    done
+    # try and speed this up by installing in parallel
+    cat  /tmp/pyenv_versions | xargs -L 1 -P 10 pyenv install --skip-existing 
 
-        pyenv install --skip-existing $CURRENT_PYENV
+    for CURRENT_PYENV in $PYENV; do
         pyenv global $CURRENT_PYENV
 
         pyenv rehash

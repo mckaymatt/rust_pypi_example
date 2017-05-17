@@ -2,7 +2,6 @@ set -ex
 
 source `dirname $0`/utils.sh
 
-
 if [ -z ${TARGET+x} ]; then
     if [ ! -z ${TRAVIS_BUILD_NUMBER+x} ]; then
         echo "Target not set but it looks like this is running on Travis."
