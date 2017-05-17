@@ -41,9 +41,7 @@ function pyenv_install() {
         python -m venv "/tmp/.venv/${CURRENT_PYENV}" || python -m virtualenv "/tmp/.venv/${CURRENT_PYENV}"
         set +x
         source /tmp/.venv/${CURRENT_PYENV}/bin/activate
-        set -x
         pip install -q -U pip 
-        set +x
         deactivate
         set -x
 

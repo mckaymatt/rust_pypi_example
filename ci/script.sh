@@ -51,10 +51,8 @@ pyenv_build_test_bundle() {
         cp dist/*.whl wheelhouse
         python setup.py develop
         make clean-pyc
-        trust_pypi_example 13 
-        make clean-pyc
-        set +e
-        py.test -vvv tests
+        set +e # Bad. i'm getting segfaults on OSX when I test for some reason. 
+        py.test -vvv tests 
         make clean-pyc
         python setup.py test || true
         set -e
