@@ -40,19 +40,25 @@ pyenv_build_test_bundle() {
         source /tmp/.venv/${CURRENT_PYENV}/bin/activate
         set -x
         make clean
-        python --version 
         pip install -q -r requirements_dev.txt
         python setup.py clean
         python setup.py build_ext
         if [ -z ${WHEELPLATFORM+x} ]; then
             python setup.py bdist_wheel
         else
-            python setup.py bdist_wheel  #--plat-name="$WHEELPLATFORM"
+            python setup.py bdist_wheel --plat-name="$WHEELPLATFORM"
         fi
         cp dist/*.whl wheelhouse
-        python setup.py test 
-        python setup.py check
         python setup.py develop
+        make clean-pyc
+        trust_pypi_example 13 
+        make clean-pyc
+        py.test -vvv tests
+        make clean-pyc
+        python setup.py test 
+        make clean-pyc
+        python setup.py check
+
         set +x
         deactivate
         set -x
