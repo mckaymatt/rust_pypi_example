@@ -8,4 +8,8 @@ tox>=2.3.1
 coverage>=4.1
 Sphinx>=1.4.8
 pytest>=2.9.2
+pytest-runner>=2.0
 Click>=6.0
+
+# install fork of setuptools-rust which doesn't require pyo3 or rust-cython
+https://github.com/mckaymatt/setuptools-rust/archive/master.zip

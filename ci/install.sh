@@ -1,39 +1,42 @@
 set -ex
 
-main() {
-    if [[ $WHEELPLATFORM == *"manylinux"* ]]; then
-        echo "Manylinx does not require Cross - WHEELPLATFORM=$WHEELPLATFORM"
-        return
-    fi
-    if [ ! -z ${SKIPCROSS+x} ]; then 
-        # This is for local testing. It skips the install.
-        echo "SKIPCROSS is set."
-        return
-    fi
-    local target=
-    if [ $TRAVIS_OS_NAME = linux ]; then
-        target=x86_64-unknown-linux-musl
-        # target=x86_64-unknown-linux-gnu
-        sort=sort
-    else
-        target=x86_64-apple-darwin
-        sort=gsort  # for `sort --sort-version`, from brew's coreutils.
-    fi
-
-    # This fetches latest stable release
-    # local tag=$(git ls-remote --tags --refs --exit-code https://github.com/japaric/cross \
-    #                    | cut -d/ -f3 \
-    #                    | grep -E '^v[0.1.0-9.]+$' \
-    #                    | $sort --version-sort \
-    #                    | tail -n1)
-    curl -LSfs https://japaric.github.io/trust/install.sh | \
-        sh -s -- \
-           --force \
-           --git japaric/cross \
-           --tag 'v0.1.10' \
-           --target $target
-}
+source `dirname $0`/utils.sh
 
 
-# Skipping this for now. 
-# main
+if [ -z ${TARGET+x} ]; then
+    if [ ! -z ${TRAVIS_BUILD_NUMBER+x} ]; then
+        echo "Target not set but it looks like this is running on Travis."
+        exit 2
+    fi
+    echo "TARGET is not set. Defaulting to x86_64-unknown-linux-gnu"
+    export TARGET='x86_64-unknown-linux-gnu'
+    # This is for local testing. You can change the default to match your system.
+else 
+    echo "TARGET is $TARGET"
+fi
+
+
+if [ -z ${RUSTRELEASE+x} ]; then
+    if [ ! -z ${TRAVIS_BUILD_NUMBER+x} ]; then
+        echo "RUSTRELEASE not set but it looks like this is running on Travis."
+        exit 2
+    fi
+    echo "RUSTRELEASE is not set. Defaulting to stable"
+    export RUSTRELEASE='stable'
+    # This is for local testing. You can change the default to match your system.
+else 
+    echo "RUSTRELEASE is $RUSTRELEASE"
+fi
+
+
+if [[ $WHEELPLATFORM == *"manylinux"* ]]; then
+    echo "Manylinx does not require Cross - WHEELPLATFORM=$WHEELPLATFORM"
+elif [[ $RUSTCOMPILER == "RUSTUP" ]]; then
+    rustup_install
+elif [[ $RUSTCOMPILER == "CROSS" ]]; then
+    # for now I don't think we actually need cross but we can leave this in.
+    cross_install
+else
+    echo "RUSTCOMPILER is not set and this isn't a Manylinux wheel - exit 2"
+    exit 2
+fi

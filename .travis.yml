@@ -13,13 +13,25 @@ env:
     - CRATE_NAME=trust_pypi_example
     # Rust release. E.g. Stable, nightly, nightly-2014-12-18
     - RUSTRELEASE=stable
-    - SKIPCROSS=true
+    - RUSTCOMPILER=RUSTUP
 
 matrix:
   include:
     # TARGET is the rust target triplet
-    # WHEELPLATFORM is the wheel platform target
-    # PYENV is the Python version to build against. Not relevent if using "manylinux"
+    # WHEELPLATFORM - is the wheel platform target that is passed in as 
+    #                 python setup.py bdist_wheel --plat-name=<WHEELPLATFORM>
+    #                 E.g. "macosx_10_11_x86_64", "win_amd64", "manylinux1_x86_64"
+    #                 Using "manylinux1_i686" or "manylinux1_x86_64" will initiate a 
+    #                 special "manylinux build"
+
+
+    # PYENV - single version, or comma seperated list of versions to build against 
+    #         Not relevent if using "manylinux" because python is already installed in 
+    #         the manylinux docker container and those are used instead
+
+    # RUSTCOMPILER - which build tools do we intall for rust. options are RUSTUP or CROSS. 
+    #                This option is ignored when building a manylinux wheel
+    #                Also, at this time you would have to integrate Cross yourself.
 
 
     # Linux
@@ -51,10 +63,10 @@ matrix:
     # See versions https://docs.travis-ci.com/user/osx-ci-environment/#OS-X-Version
     # current default is osx_image: xcode7.3 OS X 10.11
     # xcode6.4 seems to segfault with rustup or cross
-    - env: TARGET=x86_64-apple-darwin PYENV=2.7.13 WHEELPLATFORM=macosx_10_11_x86_64
+    - env: TARGET=x86_64-apple-darwin PYENV='3.6.1,3.5.3,3.4.6,2.7.13' WHEELPLATFORM=macosx_10_11_x86_64
       os: osx
       osx_image: xcode7.3
-    - env: TARGET=x86_64-apple-darwin PYENV=3.6.1 WHEELPLATFORM=macosx_10_12_x86_64
+    - env: TARGET=x86_64-apple-darwin PYENV='3.6.1,3.5.3,3.4.6,2.7.13' WHEELPLATFORM=macosx_10_12_x86_64
       os: osx
       osx_image: xcode8.1
     # - env: TARGET=i686-apple-darwin PYENV=2.7.13 WHEELPLATFORM=

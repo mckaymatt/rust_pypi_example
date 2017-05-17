@@ -2,6 +2,14 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup, Distribution
+try:
+    from setuptools_rust import RustExtension
+except ImportError:
+    import subprocess
+    print("\nsetuptools_rust is required before install - https://pypi.python.org/pypi/setuptools-rust")
+    print("attempting to install with pip...")
+    print(subprocess.check_output(["pip", "install", "setuptools_rust"]))
+    from setuptools_rust import RustExtension
 
 
 # Wheel thinks we are building a pure python wheel since we use cross for compilation 
@@ -9,10 +17,10 @@ from setuptools import setup, Distribution
 # http://stackoverflow.com/questions/35112511/pip-setup-py-bdist-wheel-no-longer-builds-forced-non-pure-wheels
 # Tested with wheel v0.29.0
 # may fail with different version of wheel
-class BinaryDistribution(Distribution):
-    """Distribution which always forces a binary package with platform name"""
-    def has_ext_modules(foo):
-        return True
+# class BinaryDistribution(Distribution):
+#     """Distribution which always forces a binary package with platform name"""
+#     def has_ext_modules(foo):
+#         return True
 
 
 with open('README.rst') as readme_file:
@@ -28,11 +36,12 @@ requirements = [
 ]
 
 test_requirements = [
-    # TODO: put package test requirements here
+    'pytest>=2.9.2',
+    'pytest-runner>=2.0'
 ]
 
 setup(
-    distclass=BinaryDistribution,
+    # distclass=BinaryDistribution,
     name='trust_pypi_example',
     version='0.1.0',
     description="Python Boilerplate contains all the boilerplate you need to create a Python wheel with Rust.",
@@ -54,6 +63,9 @@ setup(
     install_requires=requirements,
     license="Apache Software License 2.0",
     zip_safe=False,
+    rust_extensions=[
+        RustExtension('trust_pypi_example', 'trust_pypi_example/rust/Cargo.toml',
+                       debug=False, no_binding=True)],
     keywords='trust_pypi_example',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
@@ -70,4 +82,7 @@ setup(
     ],
     test_suite='tests',
     tests_require=test_requirements,
+    setup_requires=['setuptools_rust',
+    'pytest-runner>=2.0',
+    ]
 )
