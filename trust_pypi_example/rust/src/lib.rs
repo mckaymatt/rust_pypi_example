@@ -8,7 +8,6 @@ pub extern "C" fn is_prime(n: *const c_int) -> c_int {
     }
     for i in 2 .. n {
         if  n % i == 0 {
-            println!("{} % {} is 0", n, i);
             return 0
         }
     }

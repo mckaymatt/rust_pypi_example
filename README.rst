@@ -18,7 +18,7 @@ trust_pypi_example
      :alt: Updates
 
 
-Python Boilerplate contains all the boilerplate you need to create a Python wheel with Rust.
+Example of https://github.com/mckaymatt/cookiecutter-pypackage-rust-cross-platform-publish All the boilerplate for a Python Wheel package with a Rust binary module.
 
 
 * Free software: Apache Software License 2.0

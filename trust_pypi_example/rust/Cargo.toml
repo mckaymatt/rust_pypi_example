@@ -1,6 +1,6 @@
 [package]
 name = "trust_pypi_example"
-version = "0.1.0"
+version = "0.5.0"
 authors = ["Matt McKay <mckaymatt@gmail.com>"]
 
 [lib]
