@@ -14,6 +14,15 @@ pub extern "C" fn is_prime(n: *const c_int) -> c_int {
     1
 } 
 
+#[allow(dead_code)]
+#[no_mangle]
+pub extern "C" fn spare() {
+    // https://github.com/rust-lang/rust/issues/38281 😂
+    println!("");
+    //adding this (doesn't have to be named "spare") makes the compilation work.
+    // you don't even need to add this function signature where you're using these functions.
+}
+
 #[test]
 fn test_is_prime() {
     let not_prime = 12;
