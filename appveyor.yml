@@ -65,10 +65,10 @@ build_script:
 test_script:
   - "%PYTHON_DIR%\\python -m ci test"
   - ps: >-
-      Get-ChildItem -R
+      Copy-Item -Force .\dist\*.whl .
 
 deploy:
-  artifact: 'dist\*.whl'
+  artifact:  /.*\.whl/
   type: File
   name: trust_pypi_example
   # TODO update `auth_token.secure`
