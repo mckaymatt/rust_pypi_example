@@ -78,8 +78,7 @@ artifacts:
 
 deploy:
   provider: GitHub
-  artifact:  /.*\.whl/
-  type: File
+  artifact:  '**\*.whl'
   name: trust_pypi_example
   # TODO update `auth_token.secure`
   # - Create a `public_repo` GitHub token. Go to: https://github.com/settings/tokens/new
@@ -111,3 +110,4 @@ notifications:
       - mckaymatt@gmail.com
     on_build_success: false
     on_build_failure: false
+    on_build_status_changed: false
