@@ -1,5 +1,6 @@
-# Based on the "trust" template v0.1.1
-# https://github.com/japaric/trust/tree/v0.1.1
+
+# rustup requires this 2015 or newer
+image: Visual Studio 2015
 
 environment:
   global:
@@ -8,24 +9,43 @@ environment:
     RUST_VERSION: stable
 
     # TODO Update this to match the name of your project.
-    CRATE_NAME: trust
+    # CRATE_NAME: trust
 
   # TODO These are all the build jobs. Adjust as necessary. Comment out what you
   # don't need
   matrix:
     # MinGW
-    - TARGET: i686-pc-windows-gnu
-    - TARGET: x86_64-pc-windows-gnu
+    # - TARGET: i686-pc-windows-gnu
+    # - TARGET: x86_64-pc-windows-gnu
 
     # MSVC
     - TARGET: i686-pc-windows-msvc
+      PYTHON_DIR: "C:\\Python27"
+      WHEELPLATFORM: win32
+
     - TARGET: x86_64-pc-windows-msvc
+      PYTHON_DIR: "C:\\Python27-x64"
+      WHEELPLATFORM: win_amd64
+
+    - TARGET: i686-pc-windows-msvc
+      PYTHON_DIR: "C:\\Python35"
+      WHEELPLATFORM: win32
+
+    - TARGET: x86_64-pc-windows-msvc
+      PYTHON_DIR: "C:\\Python35-x64"
+      WHEELPLATFORM: win_amd64
+
 
     # Testing other channels
-    - TARGET: x86_64-pc-windows-gnu
-      RUST_VERSION: nightly
-    - TARGET: x86_64-pc-windows-msvc
-      RUST_VERSION: nightly
+    # - TARGET: x86_64-pc-windows-gnu
+    #   RUST_VERSION: nightly
+    # - TARGET: x86_64-pc-windows-msvc
+      # RUST_VERSION: nightly
+
+init:
+  - "%PYTHON_DIR%\\python.exe -m pip -U pip install scikit-ci==0.14.0"
+  # - python -m pip install scikit-ci==0.14.0 scikit-ci-addons==0.15.0
+  # - python -m ci_addons --install ../addons
 
 install:
   - ps: >-
@@ -39,32 +59,34 @@ install:
   - set PATH=%PATH%;C:\Users\appveyor\.cargo\bin
   - rustc -Vv
   - cargo -V
+  - python -m ci install
 
-# TODO This is the "test phase", tweak it as you see fit
+
+build_script:
+  - python -m ci build
+
 test_script:
-  # we don't run the "test phase" when doing deploys
-  - if [%APPVEYOR_REPO_TAG%]==[false] (
-      cargo build --target %TARGET% &&
-      cargo build --target %TARGET% --release &&
-      cargo test --target %TARGET% &&
-      cargo test --target %TARGET% --release &&
-      cargo run --target %TARGET% &&
-      cargo run --target %TARGET% --release
-    )
+  - python -m ci test
 
-before_deploy:
-  # TODO Update this to build the artifacts that matter to you
-  - cargo rustc --target %TARGET% --release --bin hello -- -C lto
-  - ps: ci\before_deploy.ps1
+# after_test:
+# - python -m ci after_test
+
+
+
+# before_deploy:
+#   # TODO Update this to build the artifacts that matter to you
+#   - cargo rustc --target %TARGET% --release --bin hello -- -C lto
+#   - ps: ci\before_deploy.ps1
 
 deploy:
-  artifact: /.*\.zip/
+  artifact: dist\**\*.whl
+  type: File
   # TODO update `auth_token.secure`
   # - Create a `public_repo` GitHub token. Go to: https://github.com/settings/tokens/new
   # - Encrypt it. Go to https://ci.appveyor.com/tools/encrypt
   # - Paste the output down here
   auth_token:
-    secure: t3puM/2hOig26EHhAodcZBc61NywF7/PFEpimR6SwGaCiqS07KR5i7iAhSABmBp7
+    secure: Z4WsdThBV6yomQH4V2M/T5/q1khChRPklJ+xDILxO34QGwcbqH2H0wlWvX+B+B89
   description: ''
   on:
     # TODO Here you can pick which targets will generate binary releases
@@ -77,7 +99,6 @@ deploy:
 
 cache:
   - C:\Users\appveyor\.cargo\registry
-  - target
 
 branches:
   only:
@@ -90,5 +111,5 @@ notifications:
     on_build_success: false
 
 # Building is done in the test phase, so we disable Appveyor's build phase.
-build: false
+# build: false
 

@@ -29,7 +29,7 @@ rustup_install() {
     source $HOME/.cargo/env
     rustup install "${RUSTRELEASE}-${TARGET}"
     rustup default "${RUSTRELEASE}-${TARGET}"
-    rustup update
+    # rustup update
 }
 
 
