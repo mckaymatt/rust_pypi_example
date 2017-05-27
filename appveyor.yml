@@ -43,7 +43,7 @@ environment:
       # RUST_VERSION: nightly
 
 init:
-  - "%PYTHON_DIR%\\python.exe -m pip install pip==9.0.1 install scikit-ci==0.14.0"
+  - "%PYTHON_DIR%\\python.exe -m pip install pip==9.0.1 scikit-ci==0.14.0"
   # - python -m pip install scikit-ci==0.14.0 scikit-ci-addons==0.15.0
   # - python -m ci_addons --install ../addons
 
