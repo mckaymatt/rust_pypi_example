@@ -8,9 +8,6 @@ environment:
   # overridden on a case by case basis down below
     RUST_VERSION: stable
 
-    # TODO Update this to match the name of your project.
-    # CRATE_NAME: trust
-
   # TODO These are all the build jobs. Adjust as necessary. Comment out what you
   # don't need
   matrix:
@@ -47,8 +44,6 @@ matrix:
 
 init:
   - "%PYTHON_DIR%\\python.exe -m pip install pip==9.0.1 scikit-ci==0.14.0"
-  # - python -m pip install scikit-ci==0.14.0 scikit-ci-addons==0.15.0
-  # - python -m ci_addons --install ../addons
 
 install:
   - ps: >-
@@ -64,22 +59,11 @@ install:
   - cargo -V
   - "%PYTHON_DIR%\\python -m ci install"
 
-
 build_script:
   - "%PYTHON_DIR%\\python -m ci build"
 
 test_script:
   - "%PYTHON_DIR%\\python -m ci test"
-
-# after_test:
-# - python -m ci after_test
-
-
-
-# before_deploy:
-#   # TODO Update this to build the artifacts that matter to you
-#   - cargo rustc --target %TARGET% --release --bin hello -- -C lto
-#   - ps: ci\before_deploy.ps1
 
 deploy:
   artifact: dist\**\*.whl
@@ -111,9 +95,7 @@ branches:
 
 notifications:
   - provider: Email
+    to:
+      - mckaymatt@gmail.com
     on_build_success: false
     on_build_failure: false
-
-# Building is done in the test phase, so we disable Appveyor's build phase.
-# build: false
-
