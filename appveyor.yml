@@ -65,7 +65,7 @@ build_script:
 test_script:
   - "%PYTHON_DIR%\\python -m ci test"
   - ps: >-
-      Git-ChildItem -R
+      Get-ChildItem -R
 
 deploy:
   artifact: '.\dist\*.whl'
