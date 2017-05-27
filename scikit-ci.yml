@@ -29,7 +29,7 @@ before_build:
 
 build:
   commands:
-    - $<RUN_ENV> $<PYTHON> setup.py build_ext --plat-name=$<WHEELPLATFORM>
+    - $<RUN_ENV> $<PYTHON> setup.py bdist_wheel --plat-name=$<WHEELPLATFORM>
 
 test:
   appveyor:
