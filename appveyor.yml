@@ -66,8 +66,16 @@ test_script:
   - "%PYTHON_DIR%\\python -m ci test"
   - ps: >-
       Copy-Item -Force .\dist\*.whl .
+      Get-ChildItem
+      Get-ChildItem .\dist\
+
+artifacts:
+  path:  '**\*.whl'
+  type: File
+  name: trust_pypi_example  
 
 deploy:
+  provider: GitHub
   artifact:  /.*\.whl/
   type: File
   name: trust_pypi_example
@@ -77,7 +85,7 @@ deploy:
   # - Paste the output down here
   auth_token:
     secure: Z4WsdThBV6yomQH4V2M/T5/q1khChRPklJ+xDILxO34QGwcbqH2H0wlWvX+B+B89
-  description: ''
+  description: "trust_pypi_example"
   on:
     # TODO Here you can pick which targets will generate binary releases
     # In this example, there are some targets that are tested using the stable
@@ -85,7 +93,6 @@ deploy:
     # for such targets and that's generated using the stable channel
     RUST_VERSION: stable
     appveyor_repo_tag: true
-  provider: GitHub
 
 cache:
   - C:\Users\appveyor\.cargo\registry
