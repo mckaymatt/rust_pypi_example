@@ -66,6 +66,9 @@ test_script:
   - "%PYTHON_DIR%\\python -m ci test"
   - ps: >-  
       Get-ChildItem .\dist\
+  - ps: >-  
+      Get-ChildItem -R trust_pypi_example\
+
 
 artifacts:
   - path:  '**\*.whl'
