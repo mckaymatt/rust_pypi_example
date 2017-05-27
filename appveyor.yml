@@ -66,13 +66,15 @@ test_script:
   - "%PYTHON_DIR%\\python -m ci test"
   - ps: >-
       Copy-Item -Force .\dist\*.whl .
+  - ps: >-
       Get-ChildItem
+  - ps: >-  
       Get-ChildItem .\dist\
 
 artifacts:
   path:  '**\*.whl'
   type: File
-  name: trust_pypi_example  
+  name: trust_pypi_example
 
 deploy:
   provider: GitHub
