@@ -64,22 +64,16 @@ build_script:
 
 test_script:
   - "%PYTHON_DIR%\\python -m ci test"
-  - ps: >-
-      Copy-Item -Force .\dist\*.whl .
-  - ps: >-
-      Get-ChildItem
   - ps: >-  
       Get-ChildItem .\dist\
 
 artifacts:
-  path:  '**\*.whl'
-  type: File
-  name: trust_pypi_example
+  - path:  '**\*.whl'
+    type: File
+    name: trust_pypi_example
 
 deploy:
   provider: GitHub
-  artifact:  '**\*.whl'
-  name: trust_pypi_example
   # TODO update `auth_token.secure`
   # - Create a `public_repo` GitHub token. Go to: https://github.com/settings/tokens/new
   # - Encrypt it. Go to https://ci.appveyor.com/tools/encrypt
