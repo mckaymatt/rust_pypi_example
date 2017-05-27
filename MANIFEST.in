@@ -13,7 +13,7 @@ recursive-exclude * *.py[co]
 recursive-include docs *.rst conf.py Makefile make.bat *.jpg *.png *.gif
 
 # we only want "release" artifacts, not "debug" artifacts
-recursive-include trust_pypi_example/rust/target/release/ *.so *.dylib *.dll *.lib  
+recursive-include trust_pypi_example/rust/target/release *.so *.dylib *.dll *.lib  
 recursive-include trust_pypi_example *.h *.c
 
 # inclusing the .rs and .toml files isn't necessary so feel free to remove them. 
