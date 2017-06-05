@@ -64,9 +64,9 @@ build_script:
 
 test_script:
   - "%PYTHON_DIR%\\python -m ci test"
-  - ps: >-  
+  - ps: >-
       Get-ChildItem .\dist\
-  - ps: >-  
+  - ps: >-
       Get-ChildItem -R trust_pypi_example\
 
 

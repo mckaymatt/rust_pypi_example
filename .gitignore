@@ -63,6 +63,8 @@ target/
 
 # virtualenv
 .venv/
+venv/
+
 
 # Wheelhouse
 wheelhouse/
