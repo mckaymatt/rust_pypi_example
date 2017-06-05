@@ -16,12 +16,15 @@ if sys.platform == 'win32':
     DYNAMIC_LIB_FORMAT = '%s.dll'
 elif sys.platform == 'darwin':
     DYNAMIC_LIB_FORMAT = 'lib%s.dylib'
-# FIXME: Does this need to check for other values of `sys.platform`?
-else:
+elif "linux" in sys.platform:
     DYNAMIC_LIB_FORMAT = 'lib%s.so'
+else:
+    raise NotImplementedError('No implementation for "{}".'
+                              ' Supported platforms are '
+                              '"win32", "darwin", and "linux"'
+                              ''.format(sys.platform))
 
 DLPATH = os.path.join(
-    # FIXME: path is hard-coded
     # If the crate is built without the "--release" flag
     # the path will be 'rust/target/debug' and this will
     # cause OSError
