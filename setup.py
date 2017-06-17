@@ -29,21 +29,21 @@ test_requirements = [
 ]
 
 setup(
-    name='trust_pypi_example',
+    name='rust_pypi_example',
     version='0.1.0',
     description="Python Boilerplate contains all the boilerplate you need to create a Python wheel with Rust.",
     long_description=readme + '\n\n' + history,
     author="Matt McKay",
     author_email='mckaymatt@gmail.com',
-    url='https://github.com/mckaymatt/trust_pypi_example',
+    url='https://github.com/mckaymatt/rust_pypi_example',
     packages=[
-        'trust_pypi_example',
+        'rust_pypi_example',
     ],
-    package_dir={'trust_pypi_example':
-                 'trust_pypi_example'},
+    package_dir={'rust_pypi_example':
+                 'rust_pypi_example'},
     entry_points={
         'console_scripts': [
-            'trust_pypi_example=trust_pypi_example.cli:main'
+            'rust_pypi_example=rust_pypi_example.cli:main'
         ]
     },
     include_package_data=True,
@@ -51,9 +51,9 @@ setup(
     license="Apache Software License 2.0",
     zip_safe=False,
     rust_extensions=[
-        RustExtension('trust_pypi_example', 'trust_pypi_example/rust/Cargo.toml',
+        RustExtension('rust_pypi_example', 'rust_pypi_example/rust/Cargo.toml',
                        debug=False, binding=Binding.NoBinding)],
-    keywords='trust_pypi_example',
+    keywords='rust_pypi_example',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',

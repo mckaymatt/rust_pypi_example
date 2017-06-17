@@ -1,4 +1,4 @@
-Welcome to trust_pypi_example's documentation!
+Welcome to rust_pypi_example's documentation!
 ======================================
 
 Contents:

@@ -67,13 +67,13 @@ test_script:
   - ps: >-
       Get-ChildItem .\dist\
   - ps: >-
-      Get-ChildItem -R trust_pypi_example\
+      Get-ChildItem -R rust_pypi_example\
 
 
 artifacts:
   - path:  '**\*.whl'
     type: File
-    name: trust_pypi_example
+    name: rust_pypi_example
 
 deploy:
   provider: GitHub
@@ -83,7 +83,7 @@ deploy:
   # - Paste the output down here
   auth_token:
     secure: Z4WsdThBV6yomQH4V2M/T5/q1khChRPklJ+xDILxO34QGwcbqH2H0wlWvX+B+B89
-  description: "trust_pypi_example"
+  description: "rust_pypi_example"
   on:
     # TODO Here you can pick which targets will generate binary releases
     # In this example, there are some targets that are tested using the stable

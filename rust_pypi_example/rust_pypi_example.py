@@ -9,7 +9,7 @@ ffi = FFI()
 ffi.cdef(open(os.path.join(
     # FIXME: path is hard-coded
     os.path.dirname(__file__), 'rust', 'src',
-    'trust_pypi_example.h',
+    'rust_pypi_example.h',
 )).read())
 
 if sys.platform == 'win32':
@@ -29,7 +29,7 @@ DLPATH = os.path.join(
     # the path will be 'rust/target/debug' and this will
     # cause OSError
     os.path.dirname(__file__), 'rust', 'target', 'release',
-    DYNAMIC_LIB_FORMAT % 'trust_pypi_example'
+    DYNAMIC_LIB_FORMAT % 'rust_pypi_example'
     )
 
 rust_lib = ffi.dlopen(DLPATH)

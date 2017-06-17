@@ -34,7 +34,7 @@ clean: clean-build clean-pyc clean-test clean-venv ## remove all build, test, co
 clean-build: ## remove build artifacts
 	rm -fr build/
 	rm -fr dist/
-	rm -fr trust_pypi_example/rust/target
+	rm -fr rust_pypi_example/rust/target
 	rm -fr .eggs/
 	rm -f *.so *.dylib *.dll 
 	find . -name '*.egg-info' -exec rm -fr {} +
@@ -55,7 +55,7 @@ clean-venv:
 	rm -rf venv
 
 lint: venv ## check style with flake8
-	venv/bin/python -m flake8 trust_pypi_example tests
+	venv/bin/python -m flake8 rust_pypi_example tests
 
 test: venv ## This will use py.test because of pytest-runner
 	venv/bin/python setup.py check
@@ -70,16 +70,16 @@ test-all: venv ## run tests on every Python version with tox
 	venv/bin/tox
 
 coverage: venv ## check code coverage quickly with the default Python
-	venv/bin/python -m coverage run --source trust_pypi_example -m pytest
+	venv/bin/python -m coverage run --source rust_pypi_example -m pytest
 	
 		venv/bin/python -m coverage report -m
 		venv/bin/python -m coverage html
 		$(BROWSER) htmlcov/index.html
 
 docs: venv ## generate Sphinx HTML documentation, including API docs
-	rm -f docs/trust_pypi_example.rst
+	rm -f docs/rust_pypi_example.rst
 	rm -f docs/modules.rst
-	venv/bin/python -m sphinx-apidoc -o docs/ trust_pypi_example
+	venv/bin/python -m sphinx-apidoc -o docs/ rust_pypi_example
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	$(BROWSER) docs/_build/html/index.html

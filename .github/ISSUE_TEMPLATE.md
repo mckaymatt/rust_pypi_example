@@ -1,4 +1,4 @@
-* trust_pypi_example version:
+* rust_pypi_example version:
 * Python version:
 * Operating System:
 

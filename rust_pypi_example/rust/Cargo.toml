@@ -1,5 +1,5 @@
 [package]
-name = "trust_pypi_example"
+name = "rust_pypi_example"
 version = "0.1.0"
 authors = ["Matt McKay <mckaymatt@gmail.com>"]
 

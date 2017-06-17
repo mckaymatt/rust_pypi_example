@@ -10,7 +10,7 @@ sudo: required
 env:
   global:
     # TODO Update this to match the name of your project.
-    - CRATE_NAME=trust_pypi_example
+    - CRATE_NAME=rust_pypi_example
     # Rust release. E.g. Stable, nightly, nightly-2014-12-18
     - RUSTRELEASE=stable
     - RUSTCOMPILER=RUSTUP
@@ -124,7 +124,7 @@ deploy:
      secure: gw5UUxAkCTOWQCcRqavrsjPNxGHDqZr1tej0Y6GzKq6DMDxcvAH36lHdP596eRUfIs20ZZcaUz9+y1DBL8cFleghLBMKHnjH9AMx5p5SMRxItkuERRE5zCsAASEf7W5z5bzR9PWoUsLXbQdR9eTaWn2JYHU00MC5RmPfH8+NAItP2xCjTX/JFqg/pXPHc0uKz5ijwDaFASF/+1zDaqHrU4SdS47o/17jQsmMOwYUMn4htfHWYFnB6dktrTlPeiCFV1qA4HntnVnm6Bls2J7THPkyZmHE1GnGTLhKhqlL/IUAHdRzQuPvcEpWwsgmwjgWbz8ccBdDVOh4n4KBRGxM+NlY0H3VZICRCI/r8aT/3M7FX5tQp5s1Cl8IDD7SHRcu6EsJKjubmntX/7/GFrMvEiIx342bA8ohFklAeZftlnaf9JSdZqvAj0NKi7K96B7BfajGEhFkd02GlC0/2uQGlZI4MajDcYd2cHB/qUvIKbRVXzkV1nFiwHD3g6PGCvFYYK+F+PCacPiz17ANuETaQgGJ6WpRV+zwTAlmmAWaAcUBdBkYkUamaQNtjIXvZCqqe0P0AX38bYJG+qXsLRL+TceZ3P0Pn8iaBkgn7VmRLq1jMio5zf6eIHQU6BENXsI1+3an2O1nLgB1TfatukMyIoORezWfQliTrkLnaP1Pmz8=
    on:
      tags: true
-     repo: mckaymatt/trust_pypi_example
+     repo: mckaymatt/rust_pypi_example
      # condition: $TOXENV == py27
  - provider: releases
    # TODO update `api_key.secure`
@@ -134,7 +134,7 @@ deploy:
    api_key:
      secure: "K4ttQbVILc4kq90ZiHOydhIwm09zHxfwUMnxwnBGMkAFdRL8oSjfXNd0O1Q/OA5XUVaFkp9Uluc6oy3AywOyjsLLu9xRm1qpgxMIak0nKGVQ8fzMrFILcTU3mXsOFX6VEfLqIR0bbmV31p//0Ytn6lH5PdOPe8Jm9AGHSIlrv0+Adzn01CZGgTZFi55p4hrzlP7zQhPliJFhtVd8dYga65t4aubEK7ZVQ030Z1pida/IaMyWQwbD63h1DrmyFBdnTl1gnk0fluWCeVnXQHgld0/P4QKZCPnPcVpn1eOdhju7L9r8Tc+AVirvv5jkCLFBtFDAinTkv2LUu8RsSKgD5Jzg8oYVXdebCpeXQ7f+3JoqyunF8NncHc4dszylNRGuJeMpFy5QTYqPkPDNQczMY9GMbsshzlDp8rKPGMPXpwwh+EeiKijm77eVZJ4UqSmoAt9yLe+Dq8I7ZB1GPUHBaVAlesWvCJ9FfzvDXbD0Piv85Wb0BCAOLuYouCtPeSaD69DeS+Y1rzEt5tSwWx3s8uTV7WPEVlROjlW2TB1ELIUQBETCw/yqEkfVm25XrQSpVlzaHxfh7RuEVyi5/Aj/q/yjeHeJYU+qN53FWWNKazeZJUeqwyDwx3Cjx09ACzKEfcmvcZiwv2mGZxhHqM3VARWvvpDDVcOmh9vQhErZzic="
    file_glob: true
-   file: wheelhouse/trust_pypi_example*.whl
+   file: wheelhouse/rust_pypi_example*.whl
    # file: $CRATE_NAME-$TRAVIS_TAG-$TARGET.*
    on:
      # TODO Here you can pick which targets will generate binary releases

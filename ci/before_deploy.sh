@@ -6,7 +6,7 @@ set -ex
 
 main() {
     # move into rust project subdir
-    cd trust_pypi_example/rust/
+    cd rust_pypi_example/rust/
 
     local src=$(pwd) \
           stage=

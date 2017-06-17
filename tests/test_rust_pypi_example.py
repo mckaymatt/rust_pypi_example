@@ -2,18 +2,18 @@
 # -*- coding: utf-8 -*-
 
 """
-test_trust_pypi_example
+test_rust_pypi_example
 ----------------------------------
 
-Tests for `trust_pypi_example` module.
+Tests for `rust_pypi_example` module.
 """
 
 import pytest
 
 from click.testing import CliRunner
 
-from trust_pypi_example import trust_pypi_example
-from trust_pypi_example import cli
+from rust_pypi_example import rust_pypi_example
+from rust_pypi_example import cli
 
 
 @pytest.fixture
@@ -32,9 +32,9 @@ def test_content(response):
     # assert 'GitHub' in BeautifulSoup(response.content).title.string
 
 
-def test_trust_pypi_example():
-    assert trust_pypi_example.rust_lib.is_prime(12) is 0
-    assert trust_pypi_example.rust_lib.is_prime(13) is 1
+def test_rust_pypi_example():
+    assert rust_pypi_example.rust_lib.is_prime(12) is 0
+    assert rust_pypi_example.rust_lib.is_prime(13) is 1
 
 
 def test_command_line_interface():

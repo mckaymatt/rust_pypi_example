@@ -10,5 +10,6 @@ Sphinx>=1.4.8
 pytest>=2.9.2
 pytest-runner>=2.0
 Click>=6.0
+twine
 
 -e git://github.com/PyO3/setuptools-rust.git@706c499a1a390ab2d175d5b44116ea5cd8097bb2#egg=setuptools_rust
