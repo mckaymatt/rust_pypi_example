@@ -3,7 +3,7 @@
 
 from setuptools import setup, Distribution
 try:
-    from setuptools_rust import RustExtension
+    from setuptools_rust import RustExtension, Binding
 except ImportError:
     import subprocess
     print("\nsetuptools_rust is required before install - https://pypi.python.org/pypi/setuptools-rust")
@@ -52,7 +52,7 @@ setup(
     zip_safe=False,
     rust_extensions=[
         RustExtension('trust_pypi_example', 'trust_pypi_example/rust/Cargo.toml',
-                       debug=False, no_binding=True)],
+                       debug=False, binding=Binding.NoBinding)],
     keywords='trust_pypi_example',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',

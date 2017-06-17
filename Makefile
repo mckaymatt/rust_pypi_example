@@ -55,7 +55,7 @@ clean-venv:
 	rm -rf venv
 
 lint: venv ## check style with flake8
-	venv/bin/flake8 trust_pypi_example tests
+	venv/bin/python -m flake8 trust_pypi_example tests
 
 test: venv ## This will use py.test because of pytest-runner
 	venv/bin/python setup.py check
@@ -63,29 +63,29 @@ test: venv ## This will use py.test because of pytest-runner
 
 venv:  ## set up a virtualenv that will by python and install dependencies
 	python -m virtualenv venv || python -m venv venv
-	venv/bin/pip install -r requirements_dev.txt
+	venv/bin/python -m pip install -r requirements_dev.txt
 
 
 test-all: venv ## run tests on every Python version with tox
 	venv/bin/tox
 
 coverage: venv ## check code coverage quickly with the default Python
-	venv/bin/coverage run --source trust_pypi_example -m pytest
+	venv/bin/python -m coverage run --source trust_pypi_example -m pytest
 	
-		venv/bin/coverage report -m
-		venv/bin/coverage html
+		venv/bin/python -m coverage report -m
+		venv/bin/python -m coverage html
 		$(BROWSER) htmlcov/index.html
 
 docs: venv ## generate Sphinx HTML documentation, including API docs
 	rm -f docs/trust_pypi_example.rst
 	rm -f docs/modules.rst
-	venv/bin/sphinx-apidoc -o docs/ trust_pypi_example
+	venv/bin/python -m sphinx-apidoc -o docs/ trust_pypi_example
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	$(BROWSER) docs/_build/html/index.html
 
 servedocs: venv docs ## compile the docs watching for changes
-	venv/bin/watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs html' -R -D .
+	venv/bin/python -m watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs html' -R -D .
 
 release: venv clean ## package and upload a release
 	venv/bin/python setup.py sdist upload
