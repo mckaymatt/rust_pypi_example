@@ -14,6 +14,9 @@ env:
     # Rust release. E.g. Stable, nightly, nightly-2014-12-18
     - RUSTRELEASE=stable
     - RUSTCOMPILER=RUSTUP
+    - TWINE_USERNAME: mckaymatt
+    - TWINE_PASSWORD:
+        secure: "CaKtC9DO5RaqBlXDrVARqn3nvmI7UyhAAgc5Ey7fgQwfRmqWoNxVW2A87xcHzGeHkxshaoeu7P56L0yBhsqz3RP3RDMe+xP1be+b+XD4zr49KrQ4b1fN/eb5uIfYqmPmBziBl637/QskiXxOj2h8zedXtg8d+39x8PGJfzn6QzfXQbNSaDlldFSKslDPn50N6i1e/SMKyfeybKMepgrz55PT7lTnRTKhHiaizYw8tqkoJqreHAriZG3uXditYqpz2Rh0WxmxGQ/l6oGzHZoTQjooClraFaaohKKZ/h2jyBtconcIppj53xQ+hxOh8XhKfENWjb+GbBWUw0mn9Uu5pbWnnaShMM8LafSun0mcWPr8792Ca87M3Op8YoVBogIrm+7oEWIx8tYGNY1cmcgcwT3KBqDIvG/FJy67+kalLRrAN1JQnEUNIxop1oRxoabQ4hsTnX9/7S1ESjptMqYUxmP4MotnRDRSSW/TXyvAkf0qsA1GsQ1kE40XELZApmaYlmF2fWHFjsLOTd9dTLySU7I963uV+gfLbGD2l/OXQEOLwMLfIXGaAYiXayFvGCeTGYZ1kgjPTE31kP2KIxiTIySBHiqzEYVMPWUYnlsDZZIT14wkdeLgUms/A0rqWoT/QB1CiHfR//OSJ91J1RA3eZbCDz7mQeM6or9F3luY5Ew="
 
 matrix:
   include:
@@ -111,21 +114,19 @@ script:
 
 after_script: set +e
 
-before_deploy:
-  - sh ci/before_deploy.sh
+before_deploy: 
+  - python -m pip install -Uq twine urllib3[secure]
 
 deploy:
 # After you create the Github repo and add it to Travis, run the
 # travis_pypi_setup.py script to finish PyPI deployment setup
- - provider: pypi
-   distributions: bdist_wheel
-   user: mckaymatt
-   password:
-     secure: gw5UUxAkCTOWQCcRqavrsjPNxGHDqZr1tej0Y6GzKq6DMDxcvAH36lHdP596eRUfIs20ZZcaUz9+y1DBL8cFleghLBMKHnjH9AMx5p5SMRxItkuERRE5zCsAASEf7W5z5bzR9PWoUsLXbQdR9eTaWn2JYHU00MC5RmPfH8+NAItP2xCjTX/JFqg/pXPHc0uKz5ijwDaFASF/+1zDaqHrU4SdS47o/17jQsmMOwYUMn4htfHWYFnB6dktrTlPeiCFV1qA4HntnVnm6Bls2J7THPkyZmHE1GnGTLhKhqlL/IUAHdRzQuPvcEpWwsgmwjgWbz8ccBdDVOh4n4KBRGxM+NlY0H3VZICRCI/r8aT/3M7FX5tQp5s1Cl8IDD7SHRcu6EsJKjubmntX/7/GFrMvEiIx342bA8ohFklAeZftlnaf9JSdZqvAj0NKi7K96B7BfajGEhFkd02GlC0/2uQGlZI4MajDcYd2cHB/qUvIKbRVXzkV1nFiwHD3g6PGCvFYYK+F+PCacPiz17ANuETaQgGJ6WpRV+zwTAlmmAWaAcUBdBkYkUamaQNtjIXvZCqqe0P0AX38bYJG+qXsLRL+TceZ3P0Pn8iaBkgn7VmRLq1jMio5zf6eIHQU6BENXsI1+3an2O1nLgB1TfatukMyIoORezWfQliTrkLnaP1Pmz8=
+
+# this is for pypi. Will fail if you haven't run 
+#    "python -m twine register ... " to register with pypi
+ - provider: script
+   script: python -m twine upload wheelhouse/rust_pypi_example*.whl
    on:
      tags: true
-     repo: mckaymatt/rust_pypi_example
-     # condition: $TOXENV == py27
  - provider: releases
    # TODO update `api_key.secure`
    # - Create a `public_repo` GitHub token. Go to: https://github.com/settings/tokens/new
@@ -145,6 +146,7 @@ deploy:
      tags: true
    skip_cleanup: true
 
+ 
 before_cache:
   # Travis can't cache files that are not readable by "others"
   - chmod -R a+r $HOME/.cache/pip

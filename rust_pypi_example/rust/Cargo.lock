@@ -1,4 +1,4 @@
 [root]
 name = "rust_pypi_example"
-version = "0.1.0"
+version = "0.6.7"
 

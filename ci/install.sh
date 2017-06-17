@@ -28,14 +28,3 @@ else
 fi
 
 
-if [[ $WHEELPLATFORM == *"manylinux"* ]]; then
-    echo "Manylinx does not require Cross - WHEELPLATFORM=$WHEELPLATFORM"
-elif [[ $RUSTCOMPILER == "RUSTUP" ]]; then
-    rustup_install
-elif [[ $RUSTCOMPILER == "CROSS" ]]; then
-    # for now I don't think we actually need cross but we can leave this in.
-    cross_install
-else
-    echo "RUSTCOMPILER is not set and this isn't a Manylinux wheel - exit 2"
-    exit 2
-fi

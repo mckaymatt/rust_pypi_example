@@ -7,6 +7,9 @@ environment:
   # TODO This is the Rust channel that build jobs will use by default but can be
   # overridden on a case by case basis down below
     RUST_VERSION: stable
+    TWINE_USERNAME: mckaymatt
+    TWINE_PASSWORD:
+      secure: 4EVS6uB7j1M9/KmSzc8g/DGha3tRVlC0YuL5ugK16uE=
 
   # TODO These are all the build jobs. Adjust as necessary. Comment out what you
   # don't need
@@ -43,7 +46,8 @@ matrix:
   fast_finish: true
 
 init:
-  - "%PYTHON_DIR%\\python.exe -m pip install pip==9.0.1 scikit-ci==0.14.0"
+  - "%PYTHON_DIR%\\python.exe -m pip install pip==9.0.1 scikit-ci==0.14.0 twine==1.9.1"
+  - "%PYTHON_DIR%\\python.exe -m pip install -U urllib3[secure]"
 
 install:
   - ps: >-
@@ -66,14 +70,15 @@ test_script:
   - "%PYTHON_DIR%\\python -m ci test"
   - ps: >-
       Get-ChildItem .\dist\
-  - ps: >-
-      Get-ChildItem -R rust_pypi_example\
-
 
 artifacts:
   - path:  '**\*.whl'
     type: File
     name: rust_pypi_example
+
+# upload to pypi
+deploy_script:
+  - ps: if ($env:APPVEYOR_REPO_TAG -eq $TRUE) { %PYTHON_DIR%\\python -m twine upload dist/* }
 
 deploy:
   provider: GitHub
