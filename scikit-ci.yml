@@ -48,3 +48,4 @@ after_test:
     commands:
     - $<RUN_ENV> $<PYTHON> -m pip install --upgrade twine urllib3[secure]
     - $<RUN_ENV> $<PYTHON> -m twine upload wheelhouse\*
+

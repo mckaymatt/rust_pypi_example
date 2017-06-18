@@ -112,7 +112,6 @@ script:
   - bash ci/script.sh
 
 deploy:
-  skip_cleanup: true
 # After you create the Github repo and add it to Travis, run the
 # travis_pypi_setup.py script to finish PyPI deployment setup
 
@@ -120,6 +119,7 @@ deploy:
 #    "python -m twine register ... " to register with pypi
  - provider: script
    script: ci/pypi_upload.sh
+   skip_cleanup: true
    on:
      tags: true
  - provider: releases
@@ -131,6 +131,7 @@ deploy:
      secure: "Wfy2/s+LddUBK4TfKcrXVLJO8TQQEY+ZMYKjwOGnjjHdM0FzcHfKauLr2by10o1qKzV+KpsJov/HZdlAK8jfOvzrMPLQWzjhEp8yxSFhyfy1gCEdPZY1rNCpVM9S/JYIl4QHpzr+fQq67ZHn9Qx72ImsRUweq77aqNL9vRlWRsCr4bQwvLG6cka3NJ5yf8m4xdQ/X9pdxGePryxpzah+KKvpXgHjJ+hAa0ckVE7OAYz5fhu3ceaGbU1Dw3g2Tzthcd2BpDN+tZf9CDqKfCvQ7AdVWzB/lcl21COZ+p8NepPjcg+OF8Nt4ez6aMTutlpECJPf0i2zhiLK8bljol6NYUjRJTobnUV8EQaBxDha447ExrmtGKscKjh0u7ys7ARZqztUvDj6CHOz14hEoI7duBN094x9KihPOoWSMmZ2hFIDUaLa9AcQWZjhAFChFDa95hhxs3kLx80Azx6uwEJ6ETA/ZlNrW9FFnCwrWL/k9QhT1UvtuHgRhZV8snp0pAdgQ8HCgyWAr1c1KNJ9AuXs1My9kVjcbXcglCmRp0JLDo0MA8iALfkOvLpdkK6viFq29Lp7WgPpSNRUGB70DBFUzMTim/GkeOrpCc6TcN+vKN7/XVG/OkmB/XA1+S1lOEtzJZlZaqms9Pi1L75deu08pK62SBzsxjSGdjwMwtToT2k="
    file_glob: true
    file: wheelhouse/rust_pypi_example*.whl
+   skip_cleanup: true
    on:
      # TODO Here you can pick which targets will generate binary releases
      # In this example, there are some targets that are tested using the stable
