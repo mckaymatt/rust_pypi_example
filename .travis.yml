@@ -16,7 +16,7 @@ env:
     - RUSTCOMPILER=RUSTUP
     - TWINE_USERNAME: mckaymatt
     - TWINE_PASSWORD:
-        secure: "CaKtC9DO5RaqBlXDrVARqn3nvmI7UyhAAgc5Ey7fgQwfRmqWoNxVW2A87xcHzGeHkxshaoeu7P56L0yBhsqz3RP3RDMe+xP1be+b+XD4zr49KrQ4b1fN/eb5uIfYqmPmBziBl637/QskiXxOj2h8zedXtg8d+39x8PGJfzn6QzfXQbNSaDlldFSKslDPn50N6i1e/SMKyfeybKMepgrz55PT7lTnRTKhHiaizYw8tqkoJqreHAriZG3uXditYqpz2Rh0WxmxGQ/l6oGzHZoTQjooClraFaaohKKZ/h2jyBtconcIppj53xQ+hxOh8XhKfENWjb+GbBWUw0mn9Uu5pbWnnaShMM8LafSun0mcWPr8792Ca87M3Op8YoVBogIrm+7oEWIx8tYGNY1cmcgcwT3KBqDIvG/FJy67+kalLRrAN1JQnEUNIxop1oRxoabQ4hsTnX9/7S1ESjptMqYUxmP4MotnRDRSSW/TXyvAkf0qsA1GsQ1kE40XELZApmaYlmF2fWHFjsLOTd9dTLySU7I963uV+gfLbGD2l/OXQEOLwMLfIXGaAYiXayFvGCeTGYZ1kgjPTE31kP2KIxiTIySBHiqzEYVMPWUYnlsDZZIT14wkdeLgUms/A0rqWoT/QB1CiHfR//OSJ91J1RA3eZbCDz7mQeM6or9F3luY5Ew="
+        secure: "cV0xWgAdwhI7cxK4JHKeFEdaOxo1k3Yb3iYhJ9ybd9Jq5823AW+wuuDxq/9PINUpcyPUdQfuVKnKi9r8BD7M0paGmj1iIaVmsQ7zq4Z6QLYQynZwJUajNeylEUsix42NhWEpZXl8Yd2jF0or7TstfU1GBIi89E5LSGjUxeJQyJT7jzm3lKZ3rjwa5Qr2F6SXpLy/dtZWFd0b+XH0WdqgbdFH23iQMpsdrTJL5yXBcdK8bwePhEBDViqcwJGICC5OI1vY1oWEbXsgq5sTOnk2AD9MtstUhMT7i2bNwe0Yjr7LH6phQRrcIAuPu+jgVVrh5Baq564fnoih3dJQr5R/hczXVvAxtOn9jTX6HUxiLkp0zWCmmDcYfoGi5Muj6hBMP6jYnNaChe/cFSHwUgXVYId90zN8MpcvSuZGXJ8rs7Ktt/bsqvczAfS+axCiHpWmQEaqedszRKMJTFGjXsFgA5/glHwwjLAtFd7Cz6IZ2aXu3lkxB5vym+gAVA6Qjh4CslpgAQ5fS1hFEavZ41OJgrzwrlyIV9iqCBosTr0PolB1TYsYGwKZq1UZPMGEDoQ1IxkBwS0vDoFkBDTaJg/t1y7Itnv8WBvYLKl8Werf6wI0vya+BnknSzSvn+hH1ATEtR5NGSWVjTrbp6S+hzosSuryrZPNytMIGCSUn4o2W8Y="
 
 matrix:
   include:
@@ -118,6 +118,7 @@ before_deploy:
   - python -m pip install -Uq twine urllib3[secure]
 
 deploy:
+
 # After you create the Github repo and add it to Travis, run the
 # travis_pypi_setup.py script to finish PyPI deployment setup
 
@@ -133,7 +134,7 @@ deploy:
    # - Encrypt it: `travis encrypt 0123456789012345678901234567890123456789
    # - Paste the output down here
    api_key:
-     secure: "K4ttQbVILc4kq90ZiHOydhIwm09zHxfwUMnxwnBGMkAFdRL8oSjfXNd0O1Q/OA5XUVaFkp9Uluc6oy3AywOyjsLLu9xRm1qpgxMIak0nKGVQ8fzMrFILcTU3mXsOFX6VEfLqIR0bbmV31p//0Ytn6lH5PdOPe8Jm9AGHSIlrv0+Adzn01CZGgTZFi55p4hrzlP7zQhPliJFhtVd8dYga65t4aubEK7ZVQ030Z1pida/IaMyWQwbD63h1DrmyFBdnTl1gnk0fluWCeVnXQHgld0/P4QKZCPnPcVpn1eOdhju7L9r8Tc+AVirvv5jkCLFBtFDAinTkv2LUu8RsSKgD5Jzg8oYVXdebCpeXQ7f+3JoqyunF8NncHc4dszylNRGuJeMpFy5QTYqPkPDNQczMY9GMbsshzlDp8rKPGMPXpwwh+EeiKijm77eVZJ4UqSmoAt9yLe+Dq8I7ZB1GPUHBaVAlesWvCJ9FfzvDXbD0Piv85Wb0BCAOLuYouCtPeSaD69DeS+Y1rzEt5tSwWx3s8uTV7WPEVlROjlW2TB1ELIUQBETCw/yqEkfVm25XrQSpVlzaHxfh7RuEVyi5/Aj/q/yjeHeJYU+qN53FWWNKazeZJUeqwyDwx3Cjx09ACzKEfcmvcZiwv2mGZxhHqM3VARWvvpDDVcOmh9vQhErZzic="
+     secure: "Wfy2/s+LddUBK4TfKcrXVLJO8TQQEY+ZMYKjwOGnjjHdM0FzcHfKauLr2by10o1qKzV+KpsJov/HZdlAK8jfOvzrMPLQWzjhEp8yxSFhyfy1gCEdPZY1rNCpVM9S/JYIl4QHpzr+fQq67ZHn9Qx72ImsRUweq77aqNL9vRlWRsCr4bQwvLG6cka3NJ5yf8m4xdQ/X9pdxGePryxpzah+KKvpXgHjJ+hAa0ckVE7OAYz5fhu3ceaGbU1Dw3g2Tzthcd2BpDN+tZf9CDqKfCvQ7AdVWzB/lcl21COZ+p8NepPjcg+OF8Nt4ez6aMTutlpECJPf0i2zhiLK8bljol6NYUjRJTobnUV8EQaBxDha447ExrmtGKscKjh0u7ys7ARZqztUvDj6CHOz14hEoI7duBN094x9KihPOoWSMmZ2hFIDUaLa9AcQWZjhAFChFDa95hhxs3kLx80Azx6uwEJ6ETA/ZlNrW9FFnCwrWL/k9QhT1UvtuHgRhZV8snp0pAdgQ8HCgyWAr1c1KNJ9AuXs1My9kVjcbXcglCmRp0JLDo0MA8iALfkOvLpdkK6viFq29Lp7WgPpSNRUGB70DBFUzMTim/GkeOrpCc6TcN+vKN7/XVG/OkmB/XA1+S1lOEtzJZlZaqms9Pi1L75deu08pK62SBzsxjSGdjwMwtToT2k="
    file_glob: true
    file: wheelhouse/rust_pypi_example*.whl
    # file: $CRATE_NAME-$TRAVIS_TAG-$TARGET.*
@@ -144,7 +145,7 @@ deploy:
      # for such targets and that's generated using the stable channel
      condition: $TRAVIS_RUST_VERSION = stable
      tags: true
-   skip_cleanup: true
+   
 
  
 before_cache:
