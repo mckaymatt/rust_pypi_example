@@ -10,13 +10,12 @@ sudo: required
 env:
   global:
     # TODO Update this to match the name of your project.
-    - CRATE_NAME=rust_pypi_example
+    - CRATE_NAME: rust_pypi_example
     # Rust release. E.g. Stable, nightly, nightly-2014-12-18
-    - RUSTRELEASE=stable
-    - RUSTCOMPILER=RUSTUP
+    - RUSTRELEASE: stable
+    - RUSTCOMPILER: RUSTUP
     - TWINE_USERNAME: mckaymatt
-    - TWINE_PASSWORD:
-        secure: "cV0xWgAdwhI7cxK4JHKeFEdaOxo1k3Yb3iYhJ9ybd9Jq5823AW+wuuDxq/9PINUpcyPUdQfuVKnKi9r8BD7M0paGmj1iIaVmsQ7zq4Z6QLYQynZwJUajNeylEUsix42NhWEpZXl8Yd2jF0or7TstfU1GBIi89E5LSGjUxeJQyJT7jzm3lKZ3rjwa5Qr2F6SXpLy/dtZWFd0b+XH0WdqgbdFH23iQMpsdrTJL5yXBcdK8bwePhEBDViqcwJGICC5OI1vY1oWEbXsgq5sTOnk2AD9MtstUhMT7i2bNwe0Yjr7LH6phQRrcIAuPu+jgVVrh5Baq564fnoih3dJQr5R/hczXVvAxtOn9jTX6HUxiLkp0zWCmmDcYfoGi5Muj6hBMP6jYnNaChe/cFSHwUgXVYId90zN8MpcvSuZGXJ8rs7Ktt/bsqvczAfS+axCiHpWmQEaqedszRKMJTFGjXsFgA5/glHwwjLAtFd7Cz6IZ2aXu3lkxB5vym+gAVA6Qjh4CslpgAQ5fS1hFEavZ41OJgrzwrlyIV9iqCBosTr0PolB1TYsYGwKZq1UZPMGEDoQ1IxkBwS0vDoFkBDTaJg/t1y7Itnv8WBvYLKl8Werf6wI0vya+BnknSzSvn+hH1ATEtR5NGSWVjTrbp6S+hzosSuryrZPNytMIGCSUn4o2W8Y="
+    - secure: Q94OKGYoeYE7HV8xTAwjf0qxw72+6hI14wAMhMfALkpWgtsWVyUdIJPTWm5s1WJrWdeZmSNK1oQjALBLV9yD1DNZgHw8lC/nTI2qY7ywpRUmrVHfeSy5YKbzeIeHC1gNLWQhq1Mc9vF7x2LWE2pI/6NuDP5uRx0NrnKw64z0P/kDGDKPDQ8kgOq8kayTSzaibMk4iNxv2h91PnWelYiKo0OluRahEYzyvl29NilmVgfJ3jpcC78nuJe4622vfVBhmGps3bZHC8D+7qSvU6TiFe/S+fXLdebe/SCujwUhSOSgsvl4YzLvUe2FFftOG5NJRwJa6EqkQRZ+1JmVO2OA5g3Mg93Tb+aDT/j597YQJYz5hDpuQTLjvsQEjbtSlDZoaNo5OeXkiutflgGXNj7NvOGNYfEvGeNb1dqsbEQyIG6aBFZy4yMWgXILjTZmH0tYpsshGPFL+yIH5aXGsbIt918F9tazy1IuSPcwcmaL1tEhsM5ETn4n1P7X1jY9yHCsg5i8RYWhF6SsHn0L/UTg2+y4nJ3odWtlXzf9BWAo1c/frhC7BJDea09vgplfeIERYuQIGDcZP5LhGkxE+gZc8MEAj9UvryjOuv/znO+1irSRV4xi4H9Yvsy/tbpWnM3Qedy9ekt1PpMgolHNoKXKh2PKPp4uJc/c12LtNNU4x7s=
 
 matrix:
   include:
@@ -112,8 +111,6 @@ install:
 script:
   - bash ci/script.sh
 
-after_script: set +e
-
 before_deploy: 
   - python -m pip install -Uq twine urllib3[secure]
 
@@ -125,7 +122,7 @@ deploy:
 # this is for pypi. Will fail if you haven't run 
 #    "python -m twine register ... " to register with pypi
  - provider: script
-   script: python -m twine upload wheelhouse/rust_pypi_example*.whl
+   script: python -m twine upload $(find wheelhouse/ -type f -name '*.whl')
    on:
      tags: true
  - provider: releases
