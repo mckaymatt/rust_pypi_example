@@ -83,7 +83,6 @@ deploy:
     script: "%PYTHON_DIR%\\python -m ci after_test"
     on:
       appveyor_repo_tag: true
-      branch: master
 
   - provider: GitHub
     # TODO update `auth_token.secure`
@@ -99,7 +98,6 @@ deploy:
       # and nightly channels. This condition makes sure there is only one release
       # for such targets and that's generated using the stable channel
       appveyor_repo_tag: true
-      branch: master
 
 cache:
   - C:\Users\appveyor\.cargo\registry
