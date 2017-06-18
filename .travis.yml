@@ -111,18 +111,15 @@ install:
 script:
   - bash ci/script.sh
 
-before_deploy: 
-  - python -m pip install -Uq twine urllib3[secure]
-
 deploy:
-
+  skip_cleanup: true
 # After you create the Github repo and add it to Travis, run the
 # travis_pypi_setup.py script to finish PyPI deployment setup
 
 # this is for pypi. Will fail if you haven't run 
 #    "python -m twine register ... " to register with pypi
  - provider: script
-   script: find wheelhouse/ -type f -name '*.whl' -print |xargs -n1 python -m twine upload 
+   script: ci/pypi_upload.sh
    on:
      tags: true
  - provider: releases

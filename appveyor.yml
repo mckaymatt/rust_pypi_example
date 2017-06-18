@@ -80,7 +80,8 @@ artifacts:
 deploy:
   # upload to pypi with twine.
   - provider: script
-    script: "%PYTHON_DIR%\\python -m ci after_test"
+    script: 
+      - "%PYTHON_DIR%\\python -m ci after_test"
     on:
       appveyor_repo_tag: true
 
