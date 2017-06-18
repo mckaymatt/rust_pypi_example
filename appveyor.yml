@@ -76,14 +76,12 @@ artifacts:
     type: File
     name: rust_pypi_example
 
+before_deploy:
+  # appveyor deploy is flaky for wheels
+  # upload to pypi with twine when there is a new tag
+  - cmd: if %APPVEYOR_REPO_TAG% equ true (%PYTHON_DIR%\\python -m ci after_test)
 
 deploy:
-  # upload to pypi with twine.
-  - provider: script
-    script: "%PYTHON_DIR%\\python -m ci after_test"
-    on:
-      appveyor_repo_tag: true
-
   - provider: GitHub
     # TODO update `auth_token.secure`
     # - Create a `public_repo` GitHub token. Go to: https://github.com/settings/tokens/new
