@@ -30,7 +30,7 @@ test_requirements = [
 
 setup(
     name='rust_pypi_example',
-    version='0.7.7',
+    version='0.7.8',
     description="Python Boilerplate contains all the boilerplate you need to create a Python wheel with Rust.",
     long_description=readme + '\n\n' + history,
     author="Matt McKay",
