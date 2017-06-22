@@ -25,11 +25,12 @@ install:
 
 before_build:
   commands:
-    - $<RUN_ENV> $<PYTHON> setup.py clean
+    - $<RUN_ENV> $<PYTHON> setup.py --verbose  clean
 
 build:
   commands:
-    - $<RUN_ENV> $<PYTHON> setup.py bdist_wheel --plat-name=$<WHEELPLATFORM>
+    - $<RUN_ENV> $<PYTHON> setup.py --verbose build_ext
+    - $<RUN_ENV> $<PYTHON> setup.py --verbose bdist_wheel --plat-name=$<WHEELPLATFORM>
 
 test:
   appveyor:
@@ -37,7 +38,7 @@ test:
       PATH: $<PYTHON_DIR>\\Scripts;$<PATH>
 
   commands:
-    - $<RUN_ENV> $<PYTHON> setup.py test
+    - $<RUN_ENV> $<PYTHON> setup.py --verbose test
 
 after_test:
   # commands:
