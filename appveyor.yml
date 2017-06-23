@@ -11,28 +11,46 @@ environment:
     TWINE_PASSWORD:
       secure: 4EVS6uB7j1M9/KmSzc8g/DGha3tRVlC0YuL5ugK16uE=
 
-  # TODO These are all the build jobs. Adjust as necessary. Comment out what you
-  # don't need
   matrix:
     # MinGW
     # - TARGET: i686-pc-windows-gnu
     # - TARGET: x86_64-pc-windows-gnu
 
     # MSVC
+    # 2.7
     - TARGET: i686-pc-windows-msvc
       PYTHON_DIR: "C:\\Python27"
       WHEELPLATFORM: win32
-
     - TARGET: x86_64-pc-windows-msvc
       PYTHON_DIR: "C:\\Python27-x64"
       WHEELPLATFORM: win_amd64
-
+    # 3.6
+    - TARGET: i686-pc-windows-msvc
+      PYTHON_DIR: "C:\\Python36"
+      WHEELPLATFORM: win32
+    - TARGET: x86_64-pc-windows-msvc
+      PYTHON_DIR: "C:\\Python36-x64"
+      WHEELPLATFORM: win_amd64
+    # 3.5
     - TARGET: i686-pc-windows-msvc
       PYTHON_DIR: "C:\\Python35"
       WHEELPLATFORM: win32
-
     - TARGET: x86_64-pc-windows-msvc
       PYTHON_DIR: "C:\\Python35-x64"
+      WHEELPLATFORM: win_amd64
+    # 3.4
+    - TARGET: i686-pc-windows-msvc
+      PYTHON_DIR: "C:\\Python34"
+      WHEELPLATFORM: win32
+    - TARGET: x86_64-pc-windows-msvc
+      PYTHON_DIR: "C:\\Python34-x64"
+      WHEELPLATFORM: win_amd64
+    # 3.3
+    - TARGET: i686-pc-windows-msvc
+      PYTHON_DIR: "C:\\Python33"
+      WHEELPLATFORM: win32
+    - TARGET: x86_64-pc-windows-msvc
+      PYTHON_DIR: "C:\\Python33-x64"
       WHEELPLATFORM: win_amd64
 
 
@@ -98,7 +116,7 @@ deploy:
       appveyor_repo_tag: true
 
 cache:
-  - C:\Users\appveyor\.cargo\registry
+  - C:\Users\appveyor\.rustup
 
 branches:
   only:
