@@ -64,8 +64,8 @@ matrix:
   fast_finish: true
 
 init:
-  - "%PYTHON_DIR%\\python.exe -m pip install pip==9.0.1 scikit-ci==0.14.0"
-  - "%PYTHON_DIR%\\python.exe -m pip install -U urllib3[secure]"
+  - "%PYTHON_DIR%\\python.exe -m pip install pip>=9.0.1 ruamel.yaml==0.14.12" 
+  - "%PYTHON_DIR%\\python.exe -m pip install -U urllib3[secure] scikit-ci==0.14.0"
 
 install:
   - ps: >-
