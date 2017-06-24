@@ -77,16 +77,17 @@ install:
   - set PATH=%PATH%;C:\Users\appveyor\.cargo\bin
   - rustc -Vv
   - cargo -V
-  - "%PYTHON_DIR%\\python.exe -m pip install -U pip>=9.0.1 wheel"
-  - "%PYTHON_DIR%\\python.exe -m pip install ruamel.yaml==0.14.12 --no-binary :all:"
+  - "%PYTHON_DIR%\\python.exe -m pip install -U pip>=9.0.1"
+  #  without updating wheel and setuptools, ruamel.yaml will fail on python 3.4
+  - "%PYTHON_DIR%\\python.exe -m pip install -U wheel setuptools"
   - "%PYTHON_DIR%\\python.exe -m pip install -U urllib3[secure] scikit-ci==0.14.0"
-  - "%PYTHON_DIR%\\python -m ci install"
+  - "%PYTHON_DIR%\\python.exe -m ci install"
 
 build_script:
-  - "%PYTHON_DIR%\\python -m ci build"
+  - "%PYTHON_DIR%\\python.exe -m ci build"
 
 test_script:
-  - "%PYTHON_DIR%\\python -m ci test"
+  - "%PYTHON_DIR%\\python.exe -m ci test"
   - ps: >-
       Get-ChildItem .\dist\
 
