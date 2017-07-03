@@ -11,4 +11,4 @@ pytest>=2.9.2
 pytest-runner>=2.0
 Click>=6.0
 twine>=1.9.1
-setuptools-rust>=0.6.0
+setuptools-rust>=0.6.1
