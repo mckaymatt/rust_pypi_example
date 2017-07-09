@@ -1,4 +1,4 @@
-.PHONY: clean clean-test clean-pyc clean-build clean-venv docs help install dist release test test-all 
+.PHONY: clean clean-test clean-pyc clean-build clean-venv docs help install dist test test-all 
 .DEFAULT_GOAL := help
 define BROWSER_PYSCRIPT
 import os, webbrowser, sys
@@ -58,6 +58,7 @@ lint: venv ## check style with flake8
 	venv/bin/python -m flake8 rust_pypi_example tests
 
 test: venv ## This will use py.test because of pytest-runner
+	venv/bin/python setup.py build_ext
 	venv/bin/python setup.py check
 	venv/bin/python setup.py test
 
@@ -87,16 +88,14 @@ docs: venv ## generate Sphinx HTML documentation, including API docs
 servedocs: venv docs ## compile the docs watching for changes
 	venv/bin/python -m watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs html' -R -D .
 
-release: venv clean ## package and upload a release
-	venv/bin/python setup.py sdist upload
-	venv/bin/python setup.py bdist_wheel upload
-
 dist: venv clean ## builds source and wheel package
 	venv/bin/python setup.py sdist
+	venv/bin/python setup.py build_ext
 	venv/bin/python setup.py bdist_wheel
 	ls -l dist
 
 install: venv clean ## install the package to the active Python's site-packages
+	venv/bin/python setup.py build_ext
 	venv/bin/python setup.py install
 
 
