@@ -1,6 +1,6 @@
 [package]
 name = "rust_pypi_example"
-version = "0.8.6"
+version = "0.8.7"
 authors = ["Matt McKay <mckaymatt@gmail.com>"]
 
 [lib]
